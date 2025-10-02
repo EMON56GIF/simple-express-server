@@ -1,2 +1,4 @@
 # JavaScript libraries
 node_modules
+.env
+.env.example
