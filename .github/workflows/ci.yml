@@ -33,7 +33,7 @@ jobs:
 
       # 5️⃣ Run tests (optional)
       - name: Run tests
-        run: npm test --if-present
+        run: npm test --passWithNoTests
 
       # 6️⃣ Build Docker image
       - name: Build Docker image
