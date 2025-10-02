@@ -1,9 +1,11 @@
 {
   "name": "simple-express-server",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npm start", 
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,5 +14,8 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
