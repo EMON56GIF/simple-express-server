@@ -1,5 +1,15 @@
+# Dev-only configs
+.prettierrc
+.prettierignore
+.editorconfig
+.eslintrc*
+jest.config.js
+
+# Node modules & logs
 node_modules
 npm-debug.log
+
+# Git & OS files
 .git
 .gitignore
 README.md
