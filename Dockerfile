@@ -1,7 +1,7 @@
 # ------------------------------
 # Stage 1: Build the application
 # ------------------------------
-FROM node:18-alpine3.22 AS builder
+FROM node:18-alpine3.19 AS builder
 
 # Set work directory as app
 WORKDIR /app
@@ -19,7 +19,7 @@ COPY . .
 # ------------------------------------
 # Stage 2: Create the final lean image
 # ------------------------------------
-FROM node:18-alpine3.22
+FROM node:18-alpine3.19
 
 WORKDIR /app
 
