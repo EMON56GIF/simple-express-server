@@ -1,7 +1,7 @@
 # ------------------------------
 # Stage 1: Build the application
 # ------------------------------
-FROM node:18-alpine3.19 AS builder
+FROM node:20-alpine3.20 AS builder
 
 # Set work directory as app
 WORKDIR /app
@@ -9,6 +9,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json (or yarn.lock) first to leverage Docker cache
 COPY package.json ./
 COPY package-lock.json ./
+
+# Disable Husky during production install
+ENV HUSKY=0
 
 # Install dependencies
 RUN npm ci --only=production && npm cache clean --force
@@ -19,7 +22,7 @@ COPY . .
 # ------------------------------------
 # Stage 2: Create the final lean image
 # ------------------------------------
-FROM node:18-alpine3.19
+FROM node:20-alpine3.20
 
 WORKDIR /app
 
