@@ -9,19 +9,20 @@ on:
       - main
 
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
       # 1️⃣ Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2️⃣ Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: "npm"
 
       # 3️⃣ Install dependencies
       - name: Install dependencies
@@ -33,20 +34,28 @@ jobs:
 
       # 5️⃣ Run tests (optional)
       - name: Run tests
-        run: npm test --passWithNoTests
+        run: npm test --if-present
 
-      # 6️⃣ Build Docker image
+      # 6️⃣ Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 7️⃣ Build Docker image
       - name: Build Docker image
-        run: docker build -t express-hello .
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: express-hello:latest
+          load: true  
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-    # # 7️⃣ (Optional) Push Docker image to Docker Hub
-    # - name: Log in to Docker Hub
-    #   uses: docker/login-action@v2
-    #   with:
-    #     username: ${{ secrets.DOCKER_USERNAME }}
-    #     password: ${{ secrets.DOCKER_PASSWORD }}
-
-    # - name: Push Docker image
-    #   run: |
-    #     docker tag express-hello your-dockerhub-username/express-hello:latest
-    #     docker push your-dockerhub-username/express-hello:latest
+      # 8️⃣ Test Docker image
+      - name: Test Docker image
+        run: |
+          docker run -d -p 3500:3500 --name test-container express-hello:latest
+          sleep 5
+          curl -f http://localhost:3500/health || exit 1
+          docker stop test-container
+          docker rm test-container

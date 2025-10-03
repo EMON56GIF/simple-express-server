@@ -5,6 +5,7 @@ This is a simple **Node.js + Express** application that starts a server on port 
 ---
 
 ## 📌 Features
+
 - Built using **Express.js**.
 - Runs a server on **port 3500**.
 - Returns a JSON response containing:
@@ -17,21 +18,28 @@ This is a simple **Node.js + Express** application that starts a server on port 
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
+
 ```bash
 git clone <https://github.com/EMON56GIF/simple-express-server.git>
 cd simple-express-server
 ```
+
 ### 2. Install dependencies
+
 ```bash
 npm install
 ```
+
 ### 3. Run the server
 
 Start normally:
+
 ```bash
 npm start
 ```
+
 Start in development mode (with auto-reload using nodemon):
+
 ```bash
 npm run dev
 ```
@@ -46,16 +54,19 @@ npm run dev
 ## 🔑 Example Usage
 
 Start the server:
+
 ```bash
 node index.js
 ```
 
 Open your browser or use curl:
+
 ```bash
 curl http://localhost:3500/
 ```
 
 You will get a JSON response:
+
 ```bash
 {
   "message": "Hello, World",
@@ -63,26 +74,26 @@ You will get a JSON response:
   "timestamp": "Thu, 02 Oct 2025 07:40:21 GMT"
 }
 ```
+
 ## ⚙️ Scripts in package.json
 
 ```bash
-"scripts": {
+  "scripts": {
   "start": "node index.js",
   "dev": "nodemon index.js",
-}
+
 ```
 
 - npm start → Runs the server once.
 - npm run dev → Runs the server with nodemon (auto-restarts on code changes).
 
-
 ## 📦 Dependencies
 
 - express
-    - Web framework for Node.js
+  - Web framework for Node.js
 
 - nodemon
-    - (dev dependency) – Auto-restart server during development
+  - (dev dependency) – Auto-restart server during development
 
 ## 📜 License
 
