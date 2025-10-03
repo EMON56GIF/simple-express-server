@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: "npm"
 
       # 3️⃣ Install dependencies
@@ -47,6 +47,7 @@ jobs:
           context: .
           push: false
           tags: express-hello:latest
+          load: true  
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
