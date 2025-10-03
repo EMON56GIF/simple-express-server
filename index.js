@@ -41,13 +41,13 @@ app.get("/", (req, res) => {
 // Get all tasks
 app.get("/api/tasks", (req, res) => {
   const { completed } = req.query;
-  
+
   let filteredTasks = tasks;
   if (completed !== undefined) {
     const isCompleted = completed === "true";
-    filteredTasks = tasks.filter(task => task.completed === isCompleted);
+    filteredTasks = tasks.filter((task) => task.completed === isCompleted);
   }
-  
+
   res.status(200).json({
     count: filteredTasks.length,
     tasks: filteredTasks,
@@ -57,29 +57,29 @@ app.get("/api/tasks", (req, res) => {
 // Get single task
 app.get("/api/tasks/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const task = tasks.find(t => t.id === id);
-  
+  const task = tasks.find((t) => t.id === id);
+
   if (!task) {
     return res.status(404).json({ error: "Task not found" });
   }
-  
+
   res.status(200).json(task);
 });
 
 // Create new task
 app.post("/api/tasks", (req, res) => {
   const { title } = req.body;
-  
+
   if (!title || title.trim() === "") {
     return res.status(400).json({ error: "Title is required" });
   }
-  
+
   const newTask = {
     id: nextId++,
     title: title.trim(),
     completed: false,
   };
-  
+
   tasks.push(newTask);
   res.status(201).json(newTask);
 });
@@ -88,36 +88,36 @@ app.post("/api/tasks", (req, res) => {
 app.put("/api/tasks/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const { title, completed } = req.body;
-  
-  const taskIndex = tasks.findIndex(t => t.id === id);
-  
+
+  const taskIndex = tasks.findIndex((t) => t.id === id);
+
   if (taskIndex === -1) {
     return res.status(404).json({ error: "Task not found" });
   }
-  
+
   if (title !== undefined) {
     if (title.trim() === "") {
       return res.status(400).json({ error: "Title cannot be empty" });
     }
     tasks[taskIndex].title = title.trim();
   }
-  
+
   if (completed !== undefined) {
     tasks[taskIndex].completed = Boolean(completed);
   }
-  
+
   res.status(200).json(tasks[taskIndex]);
 });
 
 // Delete task
 app.delete("/api/tasks/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const taskIndex = tasks.findIndex(t => t.id === id);
-  
+  const taskIndex = tasks.findIndex((t) => t.id === id);
+
   if (taskIndex === -1) {
     return res.status(404).json({ error: "Task not found" });
   }
-  
+
   const deletedTask = tasks.splice(taskIndex, 1)[0];
   res.status(200).json({ message: "Task deleted", task: deletedTask });
 });
@@ -128,14 +128,14 @@ app.use((req, res) => {
 });
 
 // Error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Something went wrong!" });
 });
 
 // Only start server if not in test mode
 // Only start server if not being imported (not in test mode)
-const isMainModule = process.argv[1] && process.argv[1].endsWith('index.js');
+const isMainModule = process.argv[1] && process.argv[1].endsWith("index.js");
 
 if (isMainModule) {
   app.listen(PORT, () => {
