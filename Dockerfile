@@ -14,7 +14,7 @@ COPY package-lock.json ./
 ENV HUSKY=0
 
 # Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
 
 # Copy the code for rest of the application
 COPY . .
