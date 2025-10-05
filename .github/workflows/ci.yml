@@ -47,7 +47,7 @@ jobs:
           context: .
           push: false
           tags: express-hello:latest
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
